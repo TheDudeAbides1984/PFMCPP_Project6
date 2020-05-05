@@ -1,3 +1,4 @@
+#include <cmath>
 /*
  Project 6: Part 1 / 2
  Video: Chapter 3 Part 2
@@ -68,10 +69,11 @@ struct T
     int value = 0; //2
     std::string name; //3
 
-    T (int v, const char *name)  //1
+    T (int v, const char *name) :
+            value (v),
+            name (name)//1
     {
-        value = v;
-        this->name = name;
+
     }
 };
 
@@ -90,38 +92,35 @@ struct TCompare                               //4
 
 struct U
 {
-    float f1 {23.53f}, f2 {3.13f};
+    float f1 {0.f}, f2 {0.f};
 
     float mf1 (const float *f3)      //12
     {
-        if (f3 != nullptr)
+        if (f3 == nullptr)
         {
-            std::cout << "U's f1 value: " << f1 << std::endl;
-            this->f1 = *f3;
-            std::cout << "U's f1 updated value: " << f1 << std::endl;
+            std::cout << "Can't perform operation on a null pointer" << std::endl;
+            return 0.f;
+        }
+        std::cout << "U's f1 value: " << f1 << std::endl;
+        this->f1 = *f3;
+        std::cout << "U's f1 updated value: " << f1 << std::endl;
 
-            while (std::abs (f2 - f1) > 0.001f)
-            {
+        while (std::abs (f2 - f1) > 0.001f)
+        {
 /*
  write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
  */
-                if (f1 > f2)
-                {
-                    f1 -= std::abs (f2 - f1) * .5f;
-                }
-                else
-                {
-                    f2 += std::abs (f2 - f1);
-                }
+            if (f1 > f2)
+            {
+                f1 -= std::abs (f2 - f1) * .5f;
             }
-            std::cout << "U's f1 updated value: " << f1 << std::endl;
-            return f1 * f2;
+            else
+            {
+                f2 += std::abs (f2 - f1);
+            }
         }
-        else
-        {
-            std::cout << "Can't perform operation on a null pointer" << std::endl;
-        }
-        return 0.f;
+        std::cout << "U's f1 updated value: " << f1 << std::endl;
+        return f1 * f2;
     }
 };
 
@@ -129,34 +128,31 @@ struct V
 {
     static float staticFunctionA (U *that, const float *f3)        //10
     {
-        if (that != nullptr && f3 != nullptr)
+        if (that == nullptr || f3 == nullptr)
         {
-            std::cout << "U's f1 value: " << that->f1 << std::endl;
-            that->f1 = *f3;
-            std::cout << "U's f1 updated value: " << that->f1 << std::endl;
+            std::cout << "Can't perform operation on a null pointer" << std::endl;
+            return 0.f;
+        }
+        std::cout << "U's f1 value: " << that->f1 << std::endl;
+        that->f1 = *f3;
+        std::cout << "U's f1 updated value: " << that->f1 << std::endl;
 
-            while (std::abs (that->f2 - that->f1) > 0.001f)
-            {
+        while (std::abs (that->f2 - that->f1) > 0.001f)
+        {
 /*
  write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
  */
-                if (that->f1 > that->f2)
-                {
-                    that->f1 -= std::abs (that->f2 - that->f1) * .5f;
-                }
-                else
-                {
-                    that->f2 += std::abs (that->f1 = that->f2);
-                }
+            if (that->f1 > that->f2)
+            {
+                that->f1 -= std::abs (that->f2 - that->f1) * .5f;
             }
-            std::cout << "U's f2 updated value: " << that->f2 << std::endl;
-            return that->f1 * that->f2;
+            else
+            {
+                that->f2 += std::abs (that->f1 = that->f2);
+            }
         }
-        else
-        {
-            std::cout << "Can't perform operation on a null pointer" << std::endl;
-        }
-        return 0.f;
+        std::cout << "U's f2 updated value: " << that->f2 << std::endl;
+        return that->f1 * that->f2;
     }
 };
 
@@ -186,9 +182,11 @@ int main ()
 }
 
         
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
