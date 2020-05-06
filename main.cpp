@@ -69,9 +69,9 @@ struct T
     int value = 0; //2
     std::string name; //3
 
-    T (int v, const char *name) :
+    T (int v, const char *newName) :
             value (v),
-            name (name)//1
+            name (newName)//1
     {
 
     }
