@@ -69,7 +69,7 @@ struct T
     int value = 0; //2
     std::string name; //3
 
-    T (int v, const char *newName) :
+    T (int v, const char* newName) :
             value (v),
             name (newName)//1
     {
@@ -79,7 +79,7 @@ struct T
 
 struct TCompare                               //4
 {
-    T *compare (T *a, T *b) //5
+    T *compare (T* a, T* b) //5
     {
         if (a != nullptr && b != nullptr)
         {
@@ -94,7 +94,7 @@ struct U
 {
     float f1 {0.f}, f2 {0.f};
 
-    float mf1 (const float *f3)      //12
+    float mf1 (const float* f3)      //12
     {
         if (f3 == nullptr)
         {
@@ -126,7 +126,7 @@ struct U
 
 struct V
 {
-    static float staticFunctionA (U *that, const float *f3)        //10
+    static float staticFunctionA (U* that, const float* f3)        //10
     {
         if (that == nullptr || f3 == nullptr)
         {
@@ -164,7 +164,7 @@ int main ()
 //    <#structName1#>
 
     TCompare f;                                           //7
-    auto *smaller = f.compare (&t1, &t2);                              //8
+    auto* smaller = f.compare (&t1, &t2);                              //8
 
     if (smaller != nullptr)
     {
