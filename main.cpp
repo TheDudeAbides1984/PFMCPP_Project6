@@ -48,7 +48,7 @@ struct U
 {
     float f1 {0.f}, f2 {0.f};
 
-    float mf1 (float& f3)      //12
+    float mf1 (const float& f3)      //12
     {
         std::cout << "U's f1 value: " << f1 << std::endl;
         f1 = f3;
