@@ -16,7 +16,6 @@ Create a branch named Part2
  
  */
 
-
 #include <iostream>
 #include <string>
 
@@ -35,14 +34,13 @@ struct T
 
 struct TCompare                               //4
 {
-    T *compare (T* a, T* b) //5
+    static T& compare (T& a, T& b) //5
     {
-        if (a != nullptr && b != nullptr)
         {
-            if (a->value < b->value) return a;
-            if (a->value > b->value) return b;
+            if (a.value < b.value) return a;
+            if (a.value > b.value) return b;
         }
-        return nullptr;
+        return a;
     }
 };
 
@@ -50,15 +48,10 @@ struct U
 {
     float f1 {0.f}, f2 {0.f};
 
-    float mf1 (const float* f3)      //12
+    float mf1 (float& f3)      //12
     {
-        if (f3 == nullptr)
-        {
-            std::cout << "Can't perform operation on a null pointer" << std::endl;
-            return 0.f;
-        }
         std::cout << "U's f1 value: " << f1 << std::endl;
-        this->f1 = *f3;
+        f1 = f3;
         std::cout << "U's f1 updated value: " << f1 << std::endl;
 
         while (std::abs (f2 - f1) > 0.001f)
@@ -82,33 +75,28 @@ struct U
 
 struct V
 {
-    static float staticFunctionA (U* that, const float* f3)        //10
+    static float staticFunctionA (U& that, const float& f3)        //10
     {
-        if (that == nullptr || f3 == nullptr)
-        {
-            std::cout << "Can't perform operation on a null pointer" << std::endl;
-            return 0.f;
-        }
-        std::cout << "U's f1 value: " << that->f1 << std::endl;
-        that->f1 = *f3;
-        std::cout << "U's f1 updated value: " << that->f1 << std::endl;
+        std::cout << "U's f1 value: " << that.f1 << std::endl;
+        that.f1 = f3;
+        std::cout << "U's f1 updated value: " << that.f1 << std::endl;
 
-        while (std::abs (that->f2 - that->f1) > 0.001f)
+        while (std::abs (that.f2 - that.f1) > 0.001f)
         {
 /*
  write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
  */
-            if (that->f1 > that->f2)
+            if (that.f1 > that.f2)
             {
-                that->f1 -= std::abs (that->f2 - that->f1) * .5f;
+                that.f1 -= std::abs (that.f2 - that.f1) * .5f;
             }
             else
             {
-                that->f2 += std::abs (that->f1 = that->f2);
+                that.f2 += std::abs (that.f1 = that.f2);
             }
         }
-        std::cout << "U's f2 updated value: " << that->f2 << std::endl;
-        return that->f1 * that->f2;
+        std::cout << "U's f2 updated value: " << that.f2 << std::endl;
+        return that.f1 * that.f2;
     }
 };
 
@@ -117,25 +105,25 @@ int main ()
     T t1 (5, "t1 string");                                             //6
     T t2 (9, "t2 string");                                             //6
 
-//    <#structName1#>
-
     TCompare f;                                           //7
-    auto* smaller = f.compare (&t1, &t2);                              //8
+    auto& smaller = f.compare (t1, t2);
 
-    if (smaller != nullptr)
-    {
-        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
-    }
+    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
 
     U u1;
     float updatedValue = 5.f;
 
-    std::cout << "[static func] u1's multiplied values: " << V::staticFunctionA (&u1, &updatedValue)
+    std::cout << "[static func] u1's multiplied values: " << V::staticFunctionA (u1, updatedValue)
               << std::endl;                  //11
 
     U u2;
-    std::cout << "[member func] u2's multiplied values: " << u2.mf1 (&updatedValue) << std::endl;
+    std::cout << "[member func] u2's multiplied values: " << u2.mf1 (updatedValue) << std::endl;
+
+    return 0;
 }
+
+
+
 
         
 
