@@ -36,7 +36,7 @@ struct T
 
 struct TCompare                               //4
 {
-    static T* compare (T& a, T& b) //5
+    T* compare (T& a, T& b) //5
     {
         {
             if (a.value < b.value) return &a;
