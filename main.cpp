@@ -5,19 +5,21 @@
 Create a branch named Part2
 
  References
- 
- 
- 1) convert all of the pointer usage (except for 'const char*') to reference types or 
+
+
+ 1) convert all of the pointer usage (except for 'const char*') to reference types or
     const reference types **>>> WHERE POSSIBLE <<<**
-        hint: There is no reference equivalent to nullptr.  
+        hint: There is no reference equivalent to nullptr.
         if a pointer (including nullptr) is being returned anywhere, don't try to convert it to a reference.
- 
+
  2) After you finish, click the [run] button.  Clear up any errors or warnings as best you can.
- 
+
  */
+
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 struct T
 {
@@ -34,13 +36,13 @@ struct T
 
 struct TCompare                               //4
 {
-    static T& compare (T& a, T& b) //5
+    static T* compare (T& a, T& b) //5
     {
         {
-            if (a.value < b.value) return a;
-            if (a.value > b.value) return b;
+            if (a.value < b.value) return &a;
+            if (a.value > b.value) return &b;
         }
-        return a;
+        return nullptr;
     }
 };
 
@@ -48,7 +50,7 @@ struct U
 {
     float f1 {0.f}, f2 {0.f};
 
-    float mf1 (const float& f3)      //12
+    float mf1 (float& f3)      //12
     {
         std::cout << "U's f1 value: " << f1 << std::endl;
         f1 = f3;
@@ -106,9 +108,9 @@ int main ()
     T t2 (9, "t2 string");                                             //6
 
     TCompare f;                                           //7
-    auto& smaller = f.compare (t1, t2);
+    auto* smaller = f.compare (t1, t2);
 
-    std::cout << "the smaller one is << " << smaller.name << std::endl; //9
+    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
 
     U u1;
     float updatedValue = 5.f;
@@ -124,8 +126,6 @@ int main ()
 
 
 
-
-        
 
 
 
